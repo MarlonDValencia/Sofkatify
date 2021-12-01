@@ -24,6 +24,7 @@
   background: #11101d;
   position: fixed;
   padding: 6px 14px;
+  margin-top: 58px;
 }
 
 .sidebar .logo_content .logo{ 
@@ -110,7 +111,6 @@ body{
   background: #121216;
   height: 100vh;
   width: 100%;
-  overflow: hidden;
 }
 
 .Login-div{
@@ -189,4 +189,11 @@ body {
 .btn{
   background-color: #ef5466;
   color: white;
+}
+
+.TopBar{  
+  z-index: 1;
+  position: fixed;
+  text-align: center;
+  min-width: 100%;
 }

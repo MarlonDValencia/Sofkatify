@@ -1,9 +1,10 @@
 const PlaylistView = () => {
   return (
-    <div className="container">
+    <div className="container " style={{marginTop: "70px"}}>
       <div className="playlist-name row">
         <h1 className="col-md-12 text-white">Playlist.Name</h1>
-        <button className="song-add btn col-md-3">Editar playlist</button>
+        <button className="mx-2 song-add btn col-md-3">Editar playlist</button>
+        
         <button className="song-add btn col-md-3">Agregar Canción</button>
         <hr />
       </div>

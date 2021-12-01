@@ -3,6 +3,9 @@ import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import PlaylistView from "./components/PlaylistView";
+import UserLibrary from "./components/UserLibrary";
+import LandingPage from "./components/LandingPage";
+import SearchPage from "./components/SearchPage";
 
 
 
@@ -16,7 +19,10 @@ function App() {
           <Sidebar/>
         </div>
         <div className="col-md-10">
-      <PlaylistView/>
+          {/* <SearchPage/> */}
+          {/* <LandingPage/> */}
+          {/* <UserLibrary/> */}
+          <PlaylistView/>
         </div>
       </div>
     </div>

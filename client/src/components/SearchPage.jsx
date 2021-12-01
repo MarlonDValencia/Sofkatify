@@ -1,13 +1,13 @@
 import '../index.css'
-const LandingPage = () => {
+const SearchPage = () => {
   return(
     <>
-    <div className="container"  style={{marginTop: "70px"}}>
-      <h1 className="text-white">Welcome to Sofkatify!</h1>
+    <div className="container"  >
+      <h1 className="text-white">Resultados de la busqueda "Busqueda"</h1>
       <hr />
-      <h3 className="text-white">Our Best Songs!</h3>
+      <h3 className="text-white">Canciones</h3>
       <hr />
-
+      <div className="SongList">
       <div className="container">
         <div className="row">
         <div className="card mx-2 my-2" style={{ width: "18rem" }}>
@@ -42,12 +42,12 @@ const LandingPage = () => {
           </div>  
         </div>
       </div>
-
-      <h3 className="text-white">Something you should try</h3>
-
+      </div>
+      <hr />
+      <h3 className="text-white">Artistas</h3>
+      <hr />
+      <div className="ArtistList">
       <div className="row">
-          <h1>Your Playlist</h1>
-
           <div className="card mx-2 my-2" style={{ width: "18rem" }}>
             <img src="https://http2.mlstatic.com/D_NQ_NP_638132-MLM43571734909_092020-O.jpg" className="card-img-top" style={{width: "150px", height:"150px"}}/>
             <div className="card-body">
@@ -87,10 +87,9 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        
+      </div>
     </div>
     </>
   )
-}
-
-export default LandingPage;
+  }
+  export default SearchPage
