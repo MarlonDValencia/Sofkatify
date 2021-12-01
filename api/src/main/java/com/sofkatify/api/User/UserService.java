@@ -34,7 +34,7 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundIdException(NO_FAULT_ID))
                 .getPlaylists().stream()
-                .map(item -> new PlaylistModel(item.getId(), item.getName(), id))
+                .map(item -> new PlaylistModel(item.getId(), item.getName(), item.getDescription(), id))
                 .collect(Collectors.toSet());
     }
 
@@ -44,7 +44,7 @@ public class UserService {
                 .map(user -> {
                     var listPlaylist = user.getPlaylists()
                             .stream()
-                            .map(item -> new PlaylistModel(item.getId(), item.getName(), user.getId()))
+                            .map(item -> new PlaylistModel(item.getId(), item.getName(), item.getDescription(), user.getId()))
                             .collect(Collectors.toSet());
                     return new UserModel(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), listPlaylist);
                 })
@@ -69,10 +69,27 @@ public class UserService {
         //ultimo ítem
         var lastTrack = listUpdated.getPlaylists()
                 .stream()
-                .max(Comparator.comparingInt(item -> (int) item.getId()))
+                .max(Comparator.comparingInt(item -> item.getId().intValue()))
                 .orElseThrow();
         aPlaylistModel.setId(lastTrack.getId());
         aPlaylistModel.setUserId(userId);
+        return aPlaylistModel;
+    }
+
+    public PlaylistModel updateAPlaylistByUserId(Long userId, PlaylistModel aPlaylistModel) {
+        var listUser = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundIdException(NO_FAULT_ID));
+
+        //Editar Playlist
+        for(var item : listUser.getPlaylists()){
+            if(item.getId().equals(aPlaylistModel.getId())){
+                item.setName(Objects.requireNonNull(aPlaylistModel.getName()));
+                item.setId(Objects.requireNonNull(aPlaylistModel.getId()));
+            }
+        }
+
+        userRepository.save(listUser);
+
         return aPlaylistModel;
     }
 

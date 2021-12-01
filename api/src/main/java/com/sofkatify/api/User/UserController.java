@@ -17,7 +17,7 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "api/{userId}/playlist")
+    @GetMapping(value = "api/{userId}/playlists")
     public Iterable<PlaylistModel> getPlaylistByUserId(@PathVariable("userId") Long userId){
         return userService.getPlaylistByUserId(userId);
     }
@@ -30,6 +30,14 @@ public class UserController {
     @PostMapping(value = "api/{userId}/playlist")
     public PlaylistModel addNewPlaylistByUserId(@PathVariable("userId") Long userId, @RequestBody PlaylistModel playlist){
         return userService.addNewPlaylistByUserId(userId, playlist);
+    }
+
+    @PutMapping(value = "api/{userId}/playlist")
+    public PlaylistModel updateAPlaylistByUserId(@PathVariable("userId") Long userId, @RequestBody PlaylistModel playlist){
+        if(playlist.getId() != null){
+            return userService.updateAPlaylistByUserId(userId, playlist);
+        }
+        throw new NotFoundIdException("No existe el id para actualizar");
     }
 
     @DeleteMapping(value = "api/user/{id}")
