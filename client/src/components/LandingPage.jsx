@@ -1,7 +1,8 @@
-const LandingPage = () =>{
+import '../index.css'
+const LandingPage = () => {
   return(
     <>
-    <h1>Qhubo gonorreas</h1>
+    a
     </>
   )
 }

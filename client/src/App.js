@@ -1,8 +1,14 @@
-import LandingPage from "./components/LandingPage";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import Footer from "./components/Footer";
+import Login from "./components/Login";
 function App() {
   return (
     <>
-    <LandingPage/>
+    <Navbar/>
+    <Sidebar/>
+    <Login/>
+    <Footer/>
     </>
   )
 }
