@@ -2,51 +2,69 @@ import '../index.css'
 const Sidebar = () => {
   return(
     <>
-    <div className="container">
-    <div className="row">
-    <div className="col-md-3 side-bar p-3 text-white bg-dark" style={{}}>
-    <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <span className="fs-4">"Nombre de usuario"</span>
-    </a>
-    <hr/>
-    <ul className="nav nav-pills flex-column mb-auto">
-      <li className="nav-item">
-        <a href="#" className="nav-link active" aria-current="page">
-          Inicio
-        </a>
-      </li>
-      <li>
-        <a href="#" className="nav-link text-white">
-          Tu Biblioteca
-        </a>
-      </li>
-      <li>
-        <a href="#" className="nav-link text-white">
-          Tus Artistas
-        </a>
-      </li>
-      <li>
-        <a href="#" className="nav-link text-white">
-          Crear playlist
-        </a>
-      </li>
-       <hr/>
-       <li>
-         <a href="#" className="nav-link text-white">
+    <div className="sidebar">
+      <div className="logo_content">
+        <div className="logo">
+        <i className='bx bx-music' ></i>
+          <div className="logo_name">
+            Sofkatify
+          </div>
+        </div>
+        <i class='bx bx-menu' id="btn">
+        </i>
+      </div>
+      <ul className="navlist list-group">
 
-         </a>
-       </li>
-    </ul>
-    <hr/>
-    <div className="dropdown">
-      <a>
-        <img src="" alt="" width="32" height="32" className="rounded-circle me-2"/>
-        <strong>Titulo Cancion</strong>
-      </a>
+        <li>
+        <i class='bx bxs-user'>
+        <span>Username</span>
+        </i>
+        {/*<span className="tooltip"></span>*/}
+        </li>
+
+        <li>
+        <a href="">
+        <i class='bx bxs-microphone-alt' >
+        <span>Mis Canciones</span>
+        </i>
+        </a>
+        {/*<span className="tooltip"></span>*/}
+        </li>
+        <li>
+        <a href="">
+        <i class='bx bxs-album' >
+        <span>Mis Albumes</span>
+        </i>
+        </a>
+        {/*<span className="tooltip"></span>*/}
+        </li>
+        <li>
+        <a href="">
+        <i class='bx bxs-playlist' >
+        <span>Mis Playlist</span>
+        </i>
+        </a>
+        {/*<span className="tooltip"></span>*/}
+        </li>
+        <hr />
+        <li>
+        <a href="">
+        <i class='bx bxs-playlist' >
+        <span>Crear playlist</span>
+        </i>
+        </a>
+        {/*<span className="tooltip"></span>*/}
+        </li>
+        <hr />
+      </ul>
+      <div className="profile_content">
+        <div className="profile">
+          <div className="profile_details">
+            <img src="profile jpg" alt="" className=""/>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
-  </div>
     </>
   )
 }
