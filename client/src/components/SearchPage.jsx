@@ -2,7 +2,7 @@ import '../index.css'
 const SearchPage = () => {
   return(
     <>
-    <div className="container"  >
+    <div className="container" style={{marginTop: "70px"}}>
       <h1 className="text-white">Resultados de la busqueda "Busqueda"</h1>
       <hr />
       <h3 className="text-white">Canciones</h3>

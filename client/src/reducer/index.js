@@ -1,5 +1,5 @@
 import { SEARCH_TRACKS, SEARCH_TRACKS_ARTIST, SEARCH_TRACKS_ALBUM, SEARCH_TRACKS_TRACK } from "../actions/search.js";
-import { GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER } from "../actions/user.js";
+import { GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER, LOGGED_USER } from "../actions/user.js";
 import { GET_PLAYLISTS, CREATE_PLAYLIST, UPDATE_PLAYLIST, DELETE_PLAYLIST } from "../actions/playlist.js";
 import { GET_TRACKS, CREATE_TRACK, DELETE_TRACK } from "../actions/track.js";
 
@@ -11,11 +11,11 @@ const initialState = {
     tracks: [],
     track: {},
     search: [],
+    loggin: false,
 };
 
 //Se establecen las funcionalidaes de cada una de las acciones en este reducer
 const rootReducer = (state = initialState, action) => {
-
     //Este método ayuda a organizar la información relevante de cada track encontrado, para que se mapee luego
     const filtrarResultados = (json) => {
         
@@ -42,6 +42,7 @@ const rootReducer = (state = initialState, action) => {
             return tracks;
         }
         return data;
+        
     }
 
 
@@ -173,6 +174,12 @@ const rootReducer = (state = initialState, action) => {
                 tracks: tracks
             };
 
+        case LOGGED_USER:
+            return {
+                ...state,
+                loggin: action.payload
+            };
+            
         default:
             return state;
     }

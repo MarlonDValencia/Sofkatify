@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import {getAllUsers} from "./actions/user"; 
+import { useDispatch, useSelector } from 'react-redux';
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
@@ -7,26 +10,38 @@ import UserLibrary from "./components/UserLibrary";
 import LandingPage from "./components/LandingPage";
 import SearchPage from "./components/SearchPage";
 
-
-
 function App() {
+  const dispatch = useDispatch();
+  const loggin = useSelector(state => state.loggin)
+  
+  useEffect(() =>{
+    dispatch(getAllUsers())
+  },[dispatch])
+
   return (
     <>
-    <Navbar/>
-    <div className="container">
-      <div className="row">
-        <div className="col-md-2">
-          <Sidebar/>
-        </div>
-        <div className="col-md-10">
-          {/* <SearchPage/> */}
-          {/* <LandingPage/> */}
-          {/* <UserLibrary/> */}
-          <PlaylistView/>
-        </div>
-      </div>
-    </div>
-    {/* <Login/> */}
+      {loggin ? (
+        <>
+          <Navbar />
+          <div className="container">
+            <div className="row">
+              <div className="col-md-2">
+                <Sidebar />
+              </div>
+              <div className="col-md-10">
+                <SearchPage />
+                {/* <LandingPage/> */}
+                {/* <UserLibrary/> */}
+                {/* <PlaylistView/> */}
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <Login />
+      )}
+
+      {/* <Login/> */}
     </>
   )
 }

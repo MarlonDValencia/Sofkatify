@@ -2,10 +2,16 @@ export const GET_USERS = "GET_USERS";
 export const CREATE_USER = "CREATE_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const DELETE_USER = "DELETE_USER";
+export const LOGGED_USER = "LOGGED_USER";
 
 const HOST_API = "http://127.0.0.1:8080/api/";
-
 //Obtencion de usuarios registrados
+export function logginUser(){
+    return async function(dispatch){
+        return dispatch({ type: LOGGED_USER, payload: true })
+    }
+}
+
 export function getAllUsers() {
     return async function(dispatch) {
         return await fetch(HOST_API + "users")
