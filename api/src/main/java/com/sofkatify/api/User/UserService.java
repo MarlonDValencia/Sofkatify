@@ -34,7 +34,13 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundIdException(NO_FAULT_ID))
                 .getPlaylists().stream()
-                .map(item -> new PlaylistModel(item.getId(), item.getName(), item.getDescription(), id))
+                .map(playlist -> {
+                    var listTrack = playlist.getTracks()
+                            .stream()
+                            .map(item -> new TrackModel(item.getId(), item.getTitle(), item.getArtist(), item.getAlbum(), item.getDuration(), playlist.getId()))
+                            .collect(Collectors.toSet());
+                    return new PlaylistModel(playlist.getId(), playlist.getName(), playlist.getDescription(), listTrack, id);
+                })
                 .collect(Collectors.toSet());
     }
 
@@ -44,7 +50,13 @@ public class UserService {
                 .map(user -> {
                     var listPlaylist = user.getPlaylists()
                             .stream()
-                            .map(item -> new PlaylistModel(item.getId(), item.getName(), item.getDescription(), user.getId()))
+                            .map(playlist -> {
+                                var listTrack = playlist.getTracks()
+                                        .stream()
+                                        .map(item -> new TrackModel(item.getId(), item.getTitle(), item.getArtist(), item.getAlbum(), item.getDuration(), playlist.getId()))
+                                        .collect(Collectors.toSet());
+                                return new PlaylistModel(playlist.getId(), playlist.getName(), playlist.getDescription(), listTrack, user.getId());
+                            })
                             .collect(Collectors.toSet());
                     return new UserModel(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), listPlaylist);
                 })
@@ -58,6 +70,8 @@ public class UserService {
 
         playlist.setId(aPlaylistModel.getId());
         playlist.setName(aPlaylistModel.getName());
+        playlist.setDescription(aPlaylistModel.getDescription());
+
 
         if(playlist.getName().isEmpty() || playlist.getName().length() < 3){
             throw new com.sofkatify.api.Playlist.ToDoBusinessException("Entrada no válida para el título de una playlist");
@@ -85,6 +99,7 @@ public class UserService {
             if(item.getId().equals(aPlaylistModel.getId())){
                 item.setName(Objects.requireNonNull(aPlaylistModel.getName()));
                 item.setId(Objects.requireNonNull(aPlaylistModel.getId()));
+                item.setDescription(Objects.requireNonNull(aPlaylistModel.getDescription()));
             }
         }
 
@@ -96,6 +111,8 @@ public class UserService {
     public UserModel newUser(UserModel aUserModel) {
         var listUser = new User();
         listUser.setUsername(Objects.requireNonNull(aUserModel.getUsername()));
+        listUser.setPassword(Objects.requireNonNull(aUserModel.getPassword()));
+        listUser.setEmail(Objects.requireNonNull(aUserModel.getEmail()));
         if(listUser.getUsername().isEmpty() || listUser.getUsername().length() < 3){
             throw new ToDoBusinessException("No es una entrada válida para el nombre de usuario");
         }

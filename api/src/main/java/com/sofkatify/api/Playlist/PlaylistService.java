@@ -42,7 +42,7 @@ public class PlaylistService {
                             .stream()
                             .map(item -> new TrackModel(item.getId(), item.getTitle(), item.getArtist(), item.getAlbum(), item.getDuration(), playlist.getId()))
                             .collect(Collectors.toSet());
-                    return new PlaylistModel(playlist.getId(), playlist.getName(), playlist.getDescription());
+                    return new PlaylistModel(playlist.getId(), playlist.getName(), playlist.getDescription(), listTrack);
                 })
                 .collect(Collectors.toSet());
     }
@@ -65,13 +65,6 @@ public class PlaylistService {
         //Adición de la nueva canción
         listTrack.getTracks().add(track);
         var listUpdated = playlistRepository.save(listTrack);
-        //ultimo ítem
-        //---------Corregir last track porque el id es aleatorio para este caso-------------------------------
-        var lastTrack = listUpdated.getTracks()
-                .stream()
-                .max(Comparator.comparingInt(item -> (int) item.getId()))
-                .orElseThrow();
-        aTrackModel.setId(lastTrack.getId());
         aTrackModel.setPlaylistId(playlistId);
         return aTrackModel;
     }

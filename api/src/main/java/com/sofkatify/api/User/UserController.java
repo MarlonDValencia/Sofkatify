@@ -57,4 +57,5 @@ public class UserController {
     public UserModel newUser(@RequestBody UserModel user){
         return userService.newUser(user);
     }
+
 }

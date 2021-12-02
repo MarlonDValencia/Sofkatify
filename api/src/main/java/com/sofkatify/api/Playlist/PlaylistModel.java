@@ -10,20 +10,25 @@ public class PlaylistModel {
     private long userId;
     private String name;
     private String description;
+    private Set<TrackModel> items = new HashSet<>();
 
     public PlaylistModel(){
         super();
     }
 
-    public PlaylistModel(long id, String name, String description, long userId){
+    public PlaylistModel(long id, String name, String description, Set<TrackModel> items, long userId){
         this.id = id;
         this.name = name;
         this.userId = userId;
+        this.description = description;
+        this.items = items;
     }
 
-    public PlaylistModel(long id, String name, String description){
+    public PlaylistModel(long id, String name, String description, Set<TrackModel> items){
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.items = items;
     }
 
     public Long getId() {
@@ -56,5 +61,13 @@ public class PlaylistModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<TrackModel> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<TrackModel> items) {
+        this.items = items;
     }
 }
