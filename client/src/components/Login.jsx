@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'
 import { logginUser } from "../actions/user";
+import { getAllPlaylistsUser } from "../actions/playlist";
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -47,9 +48,11 @@ const Login = () => {
         }
 
     let match = false
+    var id = 0
     users.forEach(user => {
       if(user.username === state.username && user.password === state.password){
         match = true
+        id = user.id
       }
     });
     if(match){
@@ -59,6 +62,7 @@ const Login = () => {
         text: `Bienvenido ${state.username}`,
       })
       dispatch(logginUser())
+      dispatch(getAllPlaylistsUser(id))
     }else{
       Swal.fire({
         icon: 'error',

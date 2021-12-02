@@ -81,29 +81,45 @@ const Login = () => {
       })
     }
     if(!state.error_username && !state.error_email && !state.error_password){
-      users.forEach(user => {
-        if(user.username === state.username && user.email === state.email){
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'El usuario ya se encuentra registrado',
-          })
-        }else{
-          let usuario = {
-            "id": null,
-            "username": state.username,
-            "password": state.password,
-            "email" : state.email,
+      if(users.length>0){
+        users.forEach(user => {
+          if(user.username === state.username && user.email === state.email){
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'El usuario ya se encuentra registrado',
+            })
+          }else{
+            let usuario = {
+              "id": null,
+              "username": state.username,
+              "password": state.password,
+              "email" : state.email,
+            }
+            dispatch(createUser(usuario))
+            dispatch(logginUser())
+            Swal.fire({
+              icon: 'success',
+              title: 'Inicio de sesión exitoso!',
+              text: `Bienvenido ${state.username}`,
+            })
           }
-          dispatch(createUser(usuario))
-          dispatch(logginUser())
-          Swal.fire({
-            icon: 'success',
-            title: 'Inicio de sesión exitoso!',
-            text: `Bienvenido ${state.username}`,
-          })
+        })
+      }else{
+        let usuario = {
+          "id": null,
+          "username": state.username,
+          "password": state.password,
+          "email" : state.email,
         }
-      })
+        dispatch(createUser(usuario))
+        dispatch(logginUser())
+        Swal.fire({
+          icon: 'success',
+          title: 'Inicio de sesión exitoso!',
+          text: `Bienvenido ${state.username}`,
+        })
+      }
     }
   }
 
