@@ -191,6 +191,11 @@ body {
   color: white;
 }
 
+.boton-register{
+  background-color: #3d40f5;
+  color: white;
+}
+
 .TopBar{  
   z-index: 1;
   position: fixed;
