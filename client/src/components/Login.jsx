@@ -88,7 +88,6 @@ const Login = () => {
       [e.target.name] : e.target.value,
     }
     )
-    console.log(""+ e.target.name + " " + e.target.value)
   }
 
   return (
