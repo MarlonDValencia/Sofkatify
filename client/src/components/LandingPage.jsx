@@ -3,8 +3,8 @@ import "../index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { searchTracksRandom } from "../actions/search";
 import { getAllPlaylistsUser } from "../actions/playlist";
-import Swal from 'sweetalert2'
-import {createTrack , getAllTracksPlaylist} from "../actions/track"
+import Swal from "sweetalert2";
+import { createTrack, getAllTracksPlaylist } from "../actions/track";
 
 import React, { useState, useEffect } from "react";
 
@@ -28,36 +28,34 @@ const LandingPage = () => {
   const onChange = (e) => {
     setState({
       ...state,
-      [e.target.name] : e.target.value,
-    }
-    )
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const onClick = (e,cancion) => {
-    e.preventDefault()
-    let match = false
-    dispatch(getAllTracksPlaylist(state.playlist_id))
-    tracks.forEach((track)=>{
-      if(track.id === cancion.id){
-        match = true
-        
+  const onClick = (e, cancion) => {
+    e.preventDefault();
+    let match = false;
+    dispatch(getAllTracksPlaylist(state.playlist_id));
+    tracks.forEach((track) => {
+      if (track.id === cancion.id) {
+        match = true;
       }
-    })
-    if(match){
+    });
+    if (match) {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Dicha canción ya se encuentra en esta playlist',
-      })
-    }else{
+        icon: "error",
+        title: "Oops...",
+        text: "Dicha canción ya se encuentra en esta playlist",
+      });
+    } else {
       Swal.fire({
-        icon: 'success',
+        icon: "success",
         title: "Bien!",
-        text: 'Canción agregada con éxito',
-      })
-      dispatch(createTrack(state.playlist_id,cancion))
+        text: "Canción agregada con éxito",
+      });
+      dispatch(createTrack(state.playlist_id, cancion));
     }
-  }
+  };
 
   const [state, setState] = useState({
     username: "",
@@ -120,21 +118,23 @@ const LandingPage = () => {
                           aria-label="Default select example"
                         >
                           <option selected>Agrega a una playlist</option>
-                          {playlists.map((playlist) => {
-                            return (
-                              <>
-                                <option value={playlist.id}>
-                                  {playlist.name}
-                                </option>
-                              </>
-                            );
-                          })}
+                          {playlists.length > 0
+                            ? playlists.map((playlist) => {
+                                return (
+                                  <>
+                                    <option value={playlist.id}>
+                                      {playlist.name}
+                                    </option>
+                                  </>
+                                );
+                              })
+                            : null}
                         </select>
                         {state.playlist_id > 0 ? (
                           <button
                             onClick={(e) => onClick(e, cancion)}
                             className="btn my-2"
-                            style={{marginLeft:"280px"}}
+                            style={{ marginLeft: "280px" }}
                           >
                             Agregar
                           </button>

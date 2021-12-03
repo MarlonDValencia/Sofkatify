@@ -41,6 +41,7 @@ const UserLibrary = () => {
       } else if (result.isDenied) {
         Swal.fire("Playlist Eliminada", "", "info");
         setEstado(estado+1)
+        console.log("Borrar playlist")
         dispatch(deletePlaylist(id));
         dispatch(getAllPlaylistsUser(user.id))
       }
@@ -74,7 +75,7 @@ const UserLibrary = () => {
         <div className="row">
           <h1>Tu Biblioteca</h1>
 
-          {playlists.map((playlist) => {
+          {(playlists.length > 0) ? (playlists.map((playlist) => {
             return (
               <>
                 <div className="card mx-2 my-2" style={{ width: "18rem" }}>
@@ -106,7 +107,7 @@ const UserLibrary = () => {
                 </div>
               </>
             );
-          })}
+          })) : (null)}
         </div>
         <hr />
       </div>
