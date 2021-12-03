@@ -14,6 +14,10 @@ const Sidebar = () => {
     navigate(`/Library`)
   }
 
+  const redirectSofka = () => {
+    navigate(`/Home`)
+  }
+
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.user)
@@ -79,7 +83,10 @@ const Sidebar = () => {
         <div className="logo_content">
           <div className="logo">
             <i className="bx bx-music"></i>
-            <div className="logo_name">Sofkatify</div>
+            <a className="logo_name"
+            style={{textDecoration:"none", color: "inherit", cursor:"pointer"}}
+            onClick={redirectSofka}
+            >Sofkatify</a>
           </div>
           <i class="bx bx-menu" id="btn"></i>
         </div>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { deleteTrack, getAllTracksPlaylist } from "../actions/track";
-import { getPlaylistUser } from "../actions/playlist";
+import { updatePlaylist } from "../actions/playlist";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -15,6 +15,57 @@ const PlaylistView = () => {
   const dispatch = useDispatch();
   const tracks = useSelector((state) => state.tracks);
   const [estado, setEstado] = useState(0)
+
+  const editarPlaylitst = async (e,id,playlist) => {
+    e.preventDefault();
+    let datos;
+    const { value: formValues } = await Swal.fire({
+      title: "Editar Playlist",
+      html:
+        "<p>Nuevo nombre nlaylist: </p>" +
+        '<input minlength="3" required="true" id="swal-input" class="swal2-input">' +
+        "<p>Nueva descripcion de la playlist: </p>" +
+        '<input minlength="3" required="true" id="swal-input1" class="swal2-input">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          document.getElementById("swal-input").value,
+          document.getElementById("swal-input1").value,
+        ];
+      },
+    });
+    if (formValues) {
+      datos = formValues;
+      if (datos[0] === "") {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Inserte nombre de la playlist",
+        });
+      }else if(datos[0].length < 3){
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Nombre de playlist demasiado corto",
+        });
+      }else{
+        Swal.fire({
+          icon: "success",
+          title: "Playlist editada!",
+          text: `La playlist ${datos[0]} ha sido editada`,
+        });
+        let playlist_editada = {
+          id: playlist.id,
+          name: datos[0],
+          description: datos[1]
+        }
+        console.log(user.id)
+        console.log(playlist)
+        dispatch(updatePlaylist(user.id, playlist_editada))
+      }
+    }
+  }
+
   const eliminarTrack = (e,id) => {
     e.preventDefault()
     Swal.fire({
@@ -45,7 +96,13 @@ const PlaylistView = () => {
     <div className="container " style={{ marginTop: "70px" }}>
       <div className="playlist-name row">
         <h1 className="col-md-12 text-white">{playlist.name}</h1>
-        <button className="mx-2 song-add btn col-md-3">Editar playlist</button>
+        <button
+        className="mx-2 song-add btn col-md-3"
+        onClick={(e)=>{
+          editarPlaylitst(e,user.id,playlist)
+        }}
+        >Editar playlist
+        </button>
         <hr />
       </div>
 
