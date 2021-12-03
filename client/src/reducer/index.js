@@ -1,4 +1,4 @@
-import { SEARCH_TRACKS, SEARCH_TRACKS_ARTIST, SEARCH_TRACKS_ALBUM, SEARCH_TRACKS_TRACK } from "../actions/search.js";
+import { SEARCH_TRACKS, SEARCH_TRACKS_ARTIST, SEARCH_TRACKS_ALBUM, SEARCH_TRACKS_TRACK, SEARCH_TRACKS_RANDOM } from "../actions/search.js";
 import { GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER, LOGGED_USER } from "../actions/user.js";
 import { GET_PLAYLISTS, CREATE_PLAYLIST, UPDATE_PLAYLIST, DELETE_PLAYLIST } from "../actions/playlist.js";
 import { GET_TRACKS, CREATE_TRACK, DELETE_TRACK } from "../actions/track.js";
@@ -11,6 +11,7 @@ const initialState = {
     tracks: [],
     track: {},
     search: [],
+    tracksrandom: [],
     loggin: false,
 };
 
@@ -18,66 +19,102 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
     //Este método ayuda a organizar la información relevante de cada track encontrado, para que se mapee luego
     const filtrarResultados = (json) => {
-        
-        let data = json.data;
-        if(data.length > 0){
+        if (action.type !== SEARCH_TRACKS_RANDOM) {
+            let data = json.data;
+            if (data.length > 0) {
 
-            let tracks = data.map((track) => {
+                let tracks = data.map((track) => {
 
-                let segundosTotales = track.duration;
+                    let segundosTotales = track.duration;
+                    let conversion = (segundosTotales / 60);
+                    let minutos = Math.floor(conversion);
+                    let segundos = Math.round((conversion % 1) * 60);
+                    let duration = "" + minutos + ":" + segundos;
+
+                    let trackFinal = {
+                        id: track.id,
+                        title: track.title,
+                        artist: [track.artist.name, track.artist.picture],
+                        album: [track.album.title, track.album.cover],
+                        duration: duration
+                    }
+                    return trackFinal;
+                })
+                return tracks;
+            }
+            return data;
+        } else {
+
+
+            if(json.error){
+                return {
+                    id: 1111111,
+                    title: "El Problema",
+                    artist: ["Ricardo Arjona", "https://api.deezer.com/artist/4938/image"],
+                    album: ["Adentro","https://api.deezer.com/album/119699/image"],
+                    duration: "3:31"
+
+                }
+            }else{
+                let segundosTotales = json.duration;
                 let conversion = (segundosTotales / 60);
                 let minutos = Math.floor(conversion);
                 let segundos = Math.round((conversion % 1) * 60);
-                let duration = ""+ minutos +":"+ segundos;
+                let duration = "" + minutos + ":" + segundos;
     
                 let trackFinal = {
-                    id: track.id,
-                    title: track.title,
-                    artist: [track.artist.name, track.artist.picture],
-                    album: [track.album.title, track.album.cover],
+                    id: json.id,
+                    title: json.title,
+                    artist: [json.artist.name, json.artist.picture],
+                    album: [json.album.title, json.album.cover],
                     duration: duration
                 }
-                return trackFinal;
-            })
-            return tracks;
+    
+                return trackFinal   
+            }
         }
-        return data;
-        
     }
 
 
-    switch(action.type) {
-        
+    switch (action.type) {
+
         case SEARCH_TRACKS:
             return {
                 ...state,
-                search: filtrarResultados(action.payload) 
+                search: filtrarResultados(action.payload)
             };
+
 
         case SEARCH_TRACKS_ARTIST:
             return {
                 ...state,
-                search: filtrarResultados(action.payload) 
+                search: filtrarResultados(action.payload)
             };
 
         case SEARCH_TRACKS_ALBUM:
             return {
                 ...state,
-                search: filtrarResultados(action.payload) 
+                search: filtrarResultados(action.payload)
             };
 
         case SEARCH_TRACKS_TRACK:
             return {
                 ...state,
-                search: filtrarResultados(action.payload) 
+                search: filtrarResultados(action.payload)
             };
-        
+
+        case SEARCH_TRACKS_RANDOM:
+            return {
+                ...state,
+                tracksrandom: [...state.tracksrandom, filtrarResultados(action.payload)]
+            };
+
         case GET_USERS:
             return {
                 ...state,
-                users: action.payload.users 
+                users: action.payload.users
             };
-        
+
         case CREATE_USER:
             return {
                 ...state,
@@ -88,7 +125,7 @@ const rootReducer = (state = initialState, action) => {
         case UPDATE_USER:
 
             const users = state.users.map((user) => {
-                if(user.id === action.payload.id){
+                if (user.id === action.payload.id) {
                     return action.payload;
                 }
                 return user;
@@ -99,7 +136,7 @@ const rootReducer = (state = initialState, action) => {
                 user: action.payload,
                 users: users
             };
-        
+
         case DELETE_USER:
 
             const usuarios = state.users.filter((user) => {
@@ -123,11 +160,11 @@ const rootReducer = (state = initialState, action) => {
                 playlist: action.payload,
                 playlists: [...state.playlists, action.payload]
             };
-        
+
         case UPDATE_PLAYLIST:
 
             const playlists = state.playlists.map((playlist) => {
-                if(playlist.id === action.payload.id){
+                if (playlist.id === action.payload.id) {
                     return action.payload;
                 }
                 return playlist;
@@ -138,7 +175,7 @@ const rootReducer = (state = initialState, action) => {
                 playlist: action.payload,
                 playlists: playlists
             };
-        
+
         case DELETE_PLAYLIST:
 
             const playLists = state.playlists.filter((playlist) => {
@@ -149,7 +186,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 playlists: playLists
             };
-        
+
         case GET_TRACKS:
             return {
                 ...state,
@@ -162,7 +199,7 @@ const rootReducer = (state = initialState, action) => {
                 track: action.payload,
                 tracks: [...state.tracks, action.payload]
             };
-        
+
         case DELETE_TRACK:
 
             const tracks = state.tracks.filter((track) => {
@@ -177,9 +214,10 @@ const rootReducer = (state = initialState, action) => {
         case LOGGED_USER:
             return {
                 ...state,
-                loggin: action.payload
+                loggin: true,
+                user: action.payload
             };
-            
+
         default:
             return state;
     }

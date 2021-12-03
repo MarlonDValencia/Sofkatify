@@ -14,6 +14,12 @@ const Login = () => {
     navigate(`/Register`)
   }
 
+  const redirectHome = () => {
+    navigate(`/Home`)
+  }
+
+
+
   const dispatch = useDispatch();
   const users = useSelector(state => state.users)
 
@@ -49,10 +55,12 @@ const Login = () => {
 
     let match = false
     var id = 0
+    var usuario = {}
     users.forEach(user => {
       if(user.username === state.username && user.password === state.password){
         match = true
         id = user.id
+        usuario = user
       }
     });
     if(match){
@@ -61,8 +69,9 @@ const Login = () => {
         title: 'Inicio de sesión exitoso!',
         text: `Bienvenido ${state.username}`,
       })
-      dispatch(logginUser())
+      dispatch(logginUser(usuario))
       dispatch(getAllPlaylistsUser(id))
+      redirectHome()
     }else{
       Swal.fire({
         icon: 'error',

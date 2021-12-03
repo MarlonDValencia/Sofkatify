@@ -25,9 +25,6 @@ const SearchPage = () => {
         <div className="SongList">
           <div className="container">
             <div className="row">
-              
-            <ul class="list-group">
-              </ul>
               {results.map((cancion) => {
                 return (
                   <li className="list-group-item">

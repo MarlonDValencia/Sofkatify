@@ -3,8 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'
 import { logginUser, createUser } from "../actions/user";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+  let navigate = useNavigate();
+
+  const redirect = () => {
+    navigate(`/Home`)
+  }
+
+
   let regex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
   const dispatch = useDispatch();
   const users = useSelector(state => state.users)
@@ -97,10 +106,11 @@ const Login = () => {
               "email" : state.email,
             }
             dispatch(createUser(usuario))
-            dispatch(logginUser())
+            dispatch(logginUser(usuario))
+            redirect()
             Swal.fire({
               icon: 'success',
-              title: 'Inicio de sesión exitoso!',
+              title: 'Registro exitoso!',
               text: `Bienvenido ${state.username}`,
             })
           }
@@ -113,10 +123,11 @@ const Login = () => {
           "email" : state.email,
         }
         dispatch(createUser(usuario))
-        dispatch(logginUser())
+        dispatch(logginUser(usuario))
+        redirect()
         Swal.fire({
           icon: 'success',
-          title: 'Inicio de sesión exitoso!',
+          title: 'Registro exitoso!',
           text: `Bienvenido ${state.username}`,
         })
       }

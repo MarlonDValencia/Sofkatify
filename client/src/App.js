@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {getAllUsers} from "./actions/user"; 
+import { getAllUsers } from "./actions/user";
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import PlaylistView from "./components/PlaylistView";
@@ -15,36 +14,64 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-do
 function App() {
   const dispatch = useDispatch();
   const loggin = useSelector(state => state.loggin)
-  
-  useEffect(() =>{
+
+  useEffect(() => {
     dispatch(getAllUsers())
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <>
-      {loggin ? (
-        <>
-          <Navbar />
-          <div className="container">
-            <div className="row">
-              <div className="col-md-2">
-                <Sidebar />
-              </div>
-              <div className="col-md-10">
-                <SearchPage />
-                {/* <LandingPage/> */}
-                {/* <UserLibrary/> */}
-                {/* <PlaylistView/> */}
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route exact path="/Register" element={<Register />} />
+
+        <Route exact path="/Home" element={
+          <>
+            <Navbar />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-2">
+                  <Sidebar />
+                </div>
+                <div className="col-md-10">
+                  <LandingPage />
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      ) : (
-        <Routes>
-          <Route exact path="/Login" element = {<Login/>} />
-          <Route exact path="/Register" element = {<Register />} />
-        </Routes>
-      )}
+          </>
+        } />
+
+        <Route exact path="/Search" element={
+          <>
+            <Navbar />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-2">
+                  <Sidebar />
+                </div>
+                <div className="col-md-10">
+                  <SearchPage />
+                </div>
+              </div>
+            </div>
+          </>
+        } />
+        <Route exact path="/Library" element={
+          <>
+            <Navbar />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-2">
+                  <Sidebar />
+                </div>
+                <div className="col-md-10">
+                  <UserLibrary />
+                </div>
+              </div>
+            </div>
+          </>
+        } />
+      </Routes>
     </>
   )
 }

@@ -6,9 +6,9 @@ export const LOGGED_USER = "LOGGED_USER";
 
 const HOST_API = "http://127.0.0.1:8080/api/";
 //Obtencion de usuarios registrados
-export function logginUser(){
+export function logginUser(user){
     return async function(dispatch){
-        return dispatch({ type: LOGGED_USER, payload: true })
+        return dispatch({ type: LOGGED_USER, payload: user })
     }
 }
 

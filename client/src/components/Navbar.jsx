@@ -3,8 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { searchTracks } from "../actions/search";
 import Swal from 'sweetalert2'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  let navigate = useNavigate();
+  const redirectHome = () => {
+    navigate(`/Search`)
+  }
 
   const dispatch = useDispatch()
 
@@ -30,7 +35,9 @@ const Navbar = () => {
       })
     }else{
       dispatch(searchTracks(state.search))
+      redirectHome()
     }
+    
   }
   
   const onChange = (e) => {
