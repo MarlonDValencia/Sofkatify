@@ -71,6 +71,22 @@ function App() {
             </div>
           </>
         } />
+        <Route exact path="/PlaylistView" element={
+          <>
+            <Navbar />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-2">
+                  <Sidebar />
+                </div>
+                <div className="col-md-10">
+                  <PlaylistView />
+                </div>
+              </div>
+            </div>
+          </>
+        } />
+        
       </Routes>
     </>
   )

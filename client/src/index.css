@@ -202,3 +202,23 @@ body {
   text-align: center;
   min-width: 100%;
 }
+
+.btn-exit{
+  background: none;
+  border: none;
+  margin-left: 235px;
+  color: #ef5466;
+  font-size: 30px;
+}
+
+.btn-exit:hover{
+  color: red;
+}
+
+.btnexitsong{
+  background: none;
+  border: none;
+  margin-left: 235px;
+  color: #ef5466;
+  font-size: 30px;  
+}

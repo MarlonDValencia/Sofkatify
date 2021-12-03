@@ -1,6 +1,6 @@
 import { SEARCH_TRACKS, SEARCH_TRACKS_ARTIST, SEARCH_TRACKS_ALBUM, SEARCH_TRACKS_TRACK, SEARCH_TRACKS_RANDOM } from "../actions/search.js";
 import { GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER, LOGGED_USER } from "../actions/user.js";
-import { GET_PLAYLISTS, CREATE_PLAYLIST, UPDATE_PLAYLIST, DELETE_PLAYLIST } from "../actions/playlist.js";
+import { GET_PLAYLISTS, CREATE_PLAYLIST, UPDATE_PLAYLIST, DELETE_PLAYLIST, GET_PLAYLIST } from "../actions/playlist.js";
 import { GET_TRACKS, CREATE_TRACK, DELETE_TRACK } from "../actions/track.js";
 
 const initialState = {
@@ -217,6 +217,13 @@ const rootReducer = (state = initialState, action) => {
                 loggin: true,
                 user: action.payload
             };
+
+        case GET_PLAYLIST:
+            return{
+                ...state,
+                playlist: action.payload,
+                tracks: action.payload.items,
+            }
 
         default:
             return state;

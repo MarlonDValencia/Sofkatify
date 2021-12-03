@@ -3,13 +3,25 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { createPlaylist } from "../actions/playlist";
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { AiFillCloseCircle } from "react-icons/ai";
 
 const Sidebar = () => {
+
+  let navigate = useNavigate();
+
+  const redirect = () => {
+    navigate(`/Library`)
+  }
 
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.user)
 
+  const goPlaylist = (e) => {
+    e.preventDefault()
+    redirect()
+  }
   const onClick = async (e) => {
     e.preventDefault();
     let datos;
@@ -78,25 +90,11 @@ const Sidebar = () => {
             </i>
             {/*<span className="tooltip"></span>*/}
           </li>
-
           <li>
-            <a href="">
-              <i class="bx bxs-microphone-alt">
-                <span>Mis Canciones</span>
-              </i>
-            </a>
-            {/*<span className="tooltip"></span>*/}
-          </li>
-          <li>
-            <a href="">
-              <i class="bx bxs-album">
-                <span>Mis Albumes</span>
-              </i>
-            </a>
-            {/*<span className="tooltip"></span>*/}
-          </li>
-          <li>
-            <a href="">
+            <a 
+            href=""
+            onClick={goPlaylist}
+            >
               <i class="bx bxs-playlist">
                 <span>Mis Playlist</span>
               </i>

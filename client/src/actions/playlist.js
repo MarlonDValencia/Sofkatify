@@ -2,7 +2,7 @@ export const GET_PLAYLISTS = "GET_PLAYLISTS";
 export const CREATE_PLAYLIST = "CREATE_PLAYLIST";
 export const UPDATE_PLAYLIST = "UPDATE_PLAYLIST";
 export const DELETE_PLAYLIST = "DELETE_PLAYLIST";
-
+export const GET_PLAYLIST = "GET_PLAYLIST"
 const HOST_API = "http://127.0.0.1:8080/api/";
 
 //Obtencion de playlists por usuario
@@ -62,4 +62,10 @@ export function deletePlaylist(id) {
         })    
         .catch(error => console.error('Error:', error))
     };
+}
+
+export function getPlaylistUser(playlist){
+    return function(dispatch){
+        dispatch({type: GET_PLAYLIST, payload: playlist})
+    }
 }
